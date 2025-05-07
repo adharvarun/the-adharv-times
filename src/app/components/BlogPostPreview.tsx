@@ -18,8 +18,7 @@ export default function BlogPostPreview({ post }: BlogPostPreviewProps) {
   return (
     <article className="max-w-3xl w-full rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-800">
       {post.mainImage && (
-        <Link href={`/post/${post.slug.current}`}>
-          <a>
+        <Link href={`/blog/${post.slug.current}`}>
             <Image
               src={urlFor(post.mainImage).width(600).height(300).url()}
               alt={post.mainImage.alt || post.title}
@@ -27,13 +26,12 @@ export default function BlogPostPreview({ post }: BlogPostPreviewProps) {
               height={300}
               className="object-cover w-full h-48"
             />
-          </a>
         </Link>
       )}
       <div className="p-6">
         <h2 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">
           <Link href={`/post/${post.slug.current}`}>
-            <a>{post.title}</a>
+            {post.title}
           </Link>
         </h2>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
