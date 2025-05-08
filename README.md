@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Adharv Times
+
+A modern blog built with [Next.js](https://nextjs.org), [Sanity](https://www.sanity.io/), and [Tailwind CSS](https://tailwindcss.com/).
+
+## Features
+
+- Next.js App Router
+- Sanity Studio for content management (`/studio`)
+- Blog posts with categories, authors, and rich content
+- Responsive, dark-mode friendly UI
+- Portable Text rendering with custom components
+- Image optimization via Sanity CDN
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```sh
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Set up environment variables:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   Create a `.env.local` file with:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```
+   NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_SANITY_DATASET=your_dataset
+   NEXT_PUBLIC_SANITY_API_VERSION=2025-05-04
+   ```
 
-## Learn More
+3. **Run the development server:**
 
-To learn more about Next.js, take a look at the following resources:
+   ```sh
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Access Sanity Studio:**
 
-## Deploy on Vercel
+   Visit [http://localhost:3000/studio](http://localhost:3000/studio) to manage content.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/src/app` – Next.js app directory (pages, components, layout)
+- `/src/sanity` – Sanity schemas, client, and utilities
+- `/public` – Static assets (images, icons)
+- `/sanity.config.ts` – Sanity Studio configuration
+
+## Scripts
+
+- `npm run dev` – Start development server
+- `npm run build` – Build for production
+- `npm run start` – Start production server
+- `npm run lint` – Run ESLint
+
+## Deployment
+
+Deploy easily on [Vercel](https://vercel.com/) or any platform supporting Next.js.
+
+---
+
+Made with ❤️ by [Adharv Arun](https://github.com/adharvarun)
