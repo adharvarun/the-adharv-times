@@ -1,33 +1,17 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="w-full bg-white dark:bg-gray-900 shadow-md">
-      <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-        <Link href="/" legacyBehavior>
-          <a className="text-2xl font-semibold text-gray-900 dark:text-white">
+    <header className="flex not-first:bg-[#0e1013] text-white py-6 border-b border-gray-800 items-center justify-center font-">
+      <div className="max-w-4xl mx-auto px-4 grid grid-cols-1 gap-2 text-center">
+        <Link href="/" className="flex items-center justify-center space-x-3">
+          <Image src="/logo.png" alt="Logo" width={40} height={40} />
+          <span className="text-3xl font-bold tracking-tight font-dm-serif-display">
             The Adharv Times
-          </a>
+          </span>
         </Link>
-        <nav>
-          <ul className="flex space-x-6 text-gray-700 dark:text-gray-300">
-            <li>
-              <Link href="/" legacyBehavior>
-                <a className="hover:underline">Home</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" legacyBehavior>
-                <a className="hover:underline">About</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" legacyBehavior>
-                <a className="hover:underline">Contact</a>
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <span>Read &middot; Code &middot; Repeat</span>
       </div>
     </header>
   );

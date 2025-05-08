@@ -1,46 +1,54 @@
-import { client } from "../sanity/lib/client";
+import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 import BlogPostPreview from "./components/BlogPostPreview";
 
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-
-interface Post {
+type Post = {
   _id: string;
   title: string;
   slug: { current: string };
-  mainImage?: SanityImageSource & { alt?: string };
   publishedAt: string;
   author: { name: string };
-}
+};
 
-async function getPosts(): Promise<Post[]> {
-  const query = groq`*[_type == "post"] | order(publishedAt desc) {
+export const revalidate = 60;
+
+const query = groq`*[_type == "post"] | order(publishedAt desc)[0...10] {
+  _id,
+  title,
+  subtitle,
+  slug,
+  publishedAt,
+  author {
+    name
+  },
+  category->{
     _id,
     title,
-    slug,
-    mainImage,
-    publishedAt,
-    author-> {
-      name
-    }
-  }`;
-  const posts = await client.fetch(query);
-  return posts;
-}
+    slug {
+      current
+    } 
+  }
+}`;
 
-export default async function Home() {
-  const posts = await getPosts();
+export const metadata = {
+  title: "The Adharv Times",
+};
+
+export default async function HomePage() {
+  const posts: Post[] = await client.fetch(query);
 
   return (
-    <div className="flex flex-col gap-8">
-      {posts.length === 0 && (
-        <p className="text-center text-gray-600 dark:text-gray-400">
-          No posts found.
-        </p>
-      )}
-      {posts.map((post) => (
-        <BlogPostPreview key={post._id} post={post} />
-      ))}
-    </div>
+    <>
+      <div className="flex-grow bg-[#0e1013] text-white min-h-screen rounded-xl">
+        <main className="max-w-3xl mx-auto px-4 py-10">
+          <h1 className="text-3xl font-bold mb-8 font-dm-serif-display">Latest Posts</h1>
+          <ol className="space-y-6">
+              {posts.map((post) => (
+                <BlogPostPreview key={post._id} post={post} />
+              ))}
+          </ol>
+        </main>
+      </div>
+    </>
   );
 }
