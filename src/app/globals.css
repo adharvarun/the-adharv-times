@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 @import "tailwindcss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -30,4 +34,50 @@ body {
 html,
 body {
   height: 100%;
+}
+
+@layer components {
+  .prose h1 {
+    @apply text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mb-6 font-dm-serif-display;
+  }
+
+  .prose h2 {
+    @apply text-3xl font-semibold text-gray-300 mb-5 font-dm-serif-display;
+  }
+
+  .prose h3 {
+    @apply text-2xl font-medium text-gray-400 mb-4 font-dm-serif-display;
+  }
+
+  .prose p {
+    @apply text-base text-gray-300 mb-4 leading-relaxed;
+  }
+
+  .prose ul, .prose ol {
+    @apply list-inside ml-6 mb-4;
+  }
+
+  .prose li {
+    @apply mb-2 text-gray-300;
+  }
+
+  .prose a {
+    @apply text-blue-400 hover:text-blue-600 transition-colors;
+  }
+
+  .prose strong {
+    @apply font-semibold text-gray-100;
+  }
+
+  .prose em {
+    @apply italic text-gray-400;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-gray-600 pl-4 text-gray-300 italic mb-4;
+  }
+
+  .prose hr {
+    @apply mt-5 mb-5;
+  }
 }

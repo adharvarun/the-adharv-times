@@ -1,7 +1,7 @@
 import { client } from "../../../sanity/lib/client";
 import { groq } from "next-sanity";
-import { PortableText } from "@portabletext/react";
-import { PortableTextComponents } from "../../components/PortableTextComponents";
+import ReactMarkdown from "react-markdown";
+import blockContentToMarkdown from '@sanity/block-content-to-markdown';
 import Link from "next/link";
 
 export const revalidate = 60;
@@ -10,7 +10,7 @@ const query = groq`*[_type == "post" && slug.current == $slug][0]{
   title,
   subtitle,
   publishedAt,
-  category->{
+  category->{ 
     _id,
     title,
     slug {
@@ -33,6 +33,8 @@ export async function generateMetadata({ params }: PageProps) {
 
 const BlogPost = async ({ params }: PageProps): Promise<JSX.Element> => {
   const post = await client.fetch(query, { slug: params.slug });
+
+  const markdownBody = blockContentToMarkdown(post.body, { serializers: {} });
 
   return (
     <main className="max-w-3xl mx-auto py-20 px-4 text-white flex-grow min-h-screen">
@@ -60,7 +62,7 @@ const BlogPost = async ({ params }: PageProps): Promise<JSX.Element> => {
           </p>
         )}
         <article className="prose prose-invert max-w-none mt-10">
-          <PortableText value={post.body} components={PortableTextComponents} />
+          <ReactMarkdown>{markdownBody}</ReactMarkdown>
         </article>
       </div>
     </main>
