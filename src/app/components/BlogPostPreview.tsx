@@ -24,7 +24,7 @@ export default function BlogPostPreview({ post }: BlogPostPreviewProps) {
   return (
     <li key={post._id} className="border-b border-gray-800 pb-4">
       <Link href={`/blog/${post.slug.current}`}>
-        <h2 className="text-xl font-semibold hover:underline font-dm-serif-display">
+        <h2 className="text-3xl font-semibold hover:underline font-dm-serif-display">
           {post.title}
         </h2>
         {post.subtitle ? (
