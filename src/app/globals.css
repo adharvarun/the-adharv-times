@@ -15,14 +15,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-dm-serif-display: 'DM Serif Display', serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -38,19 +30,19 @@ body {
 
 @layer components {
   .prose h1 {
-    @apply text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mb-6 font-dm-serif-display;
+    @apply text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mb-6;
   }
 
   .prose h2 {
-    @apply text-3xl font-semibold text-gray-300 mb-5 font-dm-serif-display;
+    @apply text-3xl font-semibold text-gray-800 mb-5;
   }
 
   .prose h3 {
-    @apply text-2xl font-medium text-gray-400 mb-4 font-dm-serif-display;
+    @apply text-2xl font-medium text-gray-900 mb-4;
   }
 
   .prose p {
-    @apply text-base text-gray-300 mb-4 leading-relaxed;
+    @apply text-base text-gray-800 mb-4 leading-relaxed;
   }
 
   .prose ul, .prose ol {
@@ -58,15 +50,15 @@ body {
   }
 
   .prose li {
-    @apply mb-2 text-gray-300;
+    @apply mb-2 text-gray-800;
   }
 
   .prose a {
-    @apply text-blue-400 hover:text-blue-600 transition-colors;
+    @apply text-blue-600 hover:text-blue-400 transition-colors;
   }
 
   .prose strong {
-    @apply font-semibold text-gray-100;
+    @apply font-semibold text-gray-500;
   }
 
   .prose em {
@@ -74,7 +66,7 @@ body {
   }
 
   .prose blockquote {
-    @apply border-l-4 border-gray-600 pl-4 text-gray-300 italic mb-4;
+    @apply border-l-4 border-gray-600 pl-4 text-gray-700 italic mb-4;
   }
 
   .prose hr {

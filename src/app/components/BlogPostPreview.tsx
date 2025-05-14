@@ -22,32 +22,36 @@ interface BlogPostPreviewProps {
 
 export default function BlogPostPreview({ post }: BlogPostPreviewProps) {
   return (
-    <li key={post._id} className="border-b border-gray-800 pb-4">
-      <Link href={`/blog/${post.slug.current}`}>
-        <h2 className="text-3xl font-semibold hover:underline font-dm-serif-display">
-          {post.title}
-        </h2>
-        {post.subtitle ? (
-          <p className="text-lg font-medium border-solid text-gray-300 py-3 font-dm-serif-display">{post.subtitle}</p>
-        ) : null}
-      </Link>
-      <p className="text-sm text-gray-400">
-        Published on {new Date(post.publishedAt).toLocaleDateString()}
-      </p>
-      {post.category?.title ? (
-          <p className="text-sm font-medium border-solid border-1 text-gray-400 border-gray-700 w-fit px-[5px] py-[4px] rounded-full mt-2">{post.category.title}</p>
-        ) : null}
-      {post.mainImage && (
-        <Link href={`/blog/${post.slug.current}`}>
+    <li key={post._id} className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition p-0 overflow-hidden">
+      <Link href={`/blog/${post.slug.current}`} className="block">
+        {post.mainImage && (
           <Image
             src={urlFor(post.mainImage).width(600).height(300).url()}
             alt={post.mainImage.alt || post.title}
             width={600}
             height={300}
-            className="object-cover w-full h-48 mt-4"
+            className="object-cover w-full h-48 rounded-t-2xl"
           />
-        </Link>
-      )}
+        )}
+        <div className="p-6">
+          <div className="flex flex-wrap gap-2 mb-2">
+            {post.category?.title && (
+              <span className="bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full">
+                {post.category.title}
+              </span>
+            )}
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2 leading-tight">
+            {post.title}
+          </h2>
+          {post.subtitle ? (
+            <p className="text-base text-gray-600 mb-3 line-clamp-2">{post.subtitle}</p>
+          ) : null}
+          <div className="text-sm text-gray-400 flex flex-wrap gap-4 mt-4">
+            <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+          </div>
+        </div>
+      </Link>
     </li>
   );
 }

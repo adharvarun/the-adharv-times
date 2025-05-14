@@ -1,9 +1,19 @@
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+
 export default function Footer() {
   return (
-<footer className="w-full bg-[#0e1013] text-white py-2 border-t border-gray-800 shadow-inner flex-shrink-0">
-      <div className="max-w-5xl mx-auto px-6 py-6 text-center text-gray-600 dark:text-gray-400 text-sm">
-        <p>Made with ❤️ by <a href="https://github.com/adharvarun" target="_blank" rel="noopener noreferrer">Adharv Arun</a></p>
+    <footer className="w-full bg-white border-t border-gray-200 pt-16 pb-8 px-6">
+      <div className="max-w-2xl mx-auto flex flex-col items-center text-center gap-4">
+        <div className="text-2xl font-bold text-gray-900">Adharv Arun</div>
+        <div className="text-gray-500 text-base">AI Engineer & Software Developer</div>
+        <div className="flex gap-8 justify-center text-gray-500 text-3xl my-4">
+          <a href="mailto:adharvarun100@gmail.com" aria-label="Email"><FaEnvelope /></a>
+          <a href="https://github.com/adharvarun" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
+          <a href="https://linkedin.com/in/adharvarun" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin /></a>
+        </div>
+        <a href="/projects" className="mt-2 px-6 py-2 rounded-full bg-gray-100 text-gray-800 font-semibold hover:bg-gray-200 transition">Portfolio</a>
       </div>
+      <div className="text-center text-xs text-gray-400 mt-12">&copy; {new Date().getFullYear()} Adharv Arun. All rights reserved.</div>
     </footer>
   );
 }
