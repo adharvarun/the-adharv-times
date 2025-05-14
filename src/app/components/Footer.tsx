@@ -7,13 +7,13 @@ export default function Footer() {
         <div className="text-2xl font-bold text-gray-900">Adharv Arun</div>
         <div className="text-gray-500 text-base">AI Engineer & Software Developer</div>
         <div className="flex gap-8 justify-center text-gray-500 text-3xl my-4">
-          <a href="mailto:adharvarun100@gmail.com" aria-label="Email"><FaEnvelope /></a>
+          <a href="mailto:adharvarun.10@gmail.com" aria-label="Email"><FaEnvelope /></a>
           <a href="https://github.com/adharvarun" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
-          <a href="https://linkedin.com/in/adharvarun" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin /></a>
+          <a href="https://linkedin.com/in/adharv-arun" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin /></a>
         </div>
         <a href="/projects" className="mt-2 px-6 py-2 rounded-full bg-gray-100 text-gray-800 font-semibold hover:bg-gray-200 transition">Portfolio</a>
       </div>
-      <div className="text-center text-xs text-gray-400 mt-12">&copy; {new Date().getFullYear()} Adharv Arun. All rights reserved.</div>
+      <div className="text-center text-xs text-gray-400 mt-12">Made with ❤️ by Adharv Arun {new Date().getFullYear()}</div>
     </footer>
   );
 }
