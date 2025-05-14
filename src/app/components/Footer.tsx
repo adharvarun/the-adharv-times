@@ -11,7 +11,7 @@ export default function Footer() {
           <a href="https://github.com/adharvarun" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
           <a href="https://linkedin.com/in/adharv-arun" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin /></a>
         </div>
-        <a href="/projects" className="mt-2 px-6 py-2 rounded-full bg-gray-100 text-gray-800 font-semibold hover:bg-gray-200 transition">Portfolio</a>
+        <a href="https://adharvarun.tech" className="mt-2 px-6 py-2 rounded-full bg-gray-100 text-gray-800 font-semibold hover:bg-gray-200 transition">Portfolio</a>
       </div>
       <div className="text-center text-xs text-gray-400 mt-12">Made with ❤️ by Adharv Arun {new Date().getFullYear()}</div>
     </footer>
