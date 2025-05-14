@@ -23,3 +23,4 @@ export async function POST(req: Request) {
     console.error(err);
     return NextResponse.json({ error: 'Email failed to send' }, { status: 500 });
   }
+}
