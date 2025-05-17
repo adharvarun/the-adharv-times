@@ -59,6 +59,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true });
   } catch (err) {
+    console.error('Error:', err);
     return NextResponse.json({ error: 'Subscription failed' }, { status: 500 });
   }
 }
