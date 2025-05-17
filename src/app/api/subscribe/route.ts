@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   const { email } = await req.json();
@@ -12,10 +12,14 @@ export async function POST(req: Request) {
 
   try {
     await resend.emails.send({
-      from: process.env.NEXT_PUBLIC_EMAIL_FROM ?? 'noreply@adharvarun.tech',
+      from: process.env.EMAIL_FROM ?? 'noreply@blog.adharvarun.tech',
       to: email,
       subject: 'Thanks for subscribing to The Adharv Times 📰',
-      html: `<p>Welcome! You're now subscribed to <strong>The Adharv Times</strong>. Stay tuned for fresh ideas, code, and inspiration.</p>`,
+      html: `
+        <p>
+          Welcome! You're now subscribed to <strong>The Adharv Times</strong>. Stay tuned for fresh ideas, code, and inspiration.
+        </p>
+      `,
     });
 
     return NextResponse.json({ success: true });
