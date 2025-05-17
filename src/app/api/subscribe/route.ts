@@ -1,7 +1,10 @@
-import { Resend } from 'resend';
+import { promises as fs } from 'fs';
+import path from 'path';
 import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const recipientsFile = path.join(process.cwd(), 'recipients.txt');
 
 export async function POST(req: Request) {
   const { email } = await req.json();
@@ -11,6 +14,17 @@ export async function POST(req: Request) {
   }
 
   try {
+    let recipients: string[] = [];
+    try {
+      const data = await fs.readFile(recipientsFile, 'utf-8');
+      recipients = data.split('\n').map(e => e.trim()).filter(Boolean);
+    } catch {}
+
+    if (!recipients.includes(email)) {
+      recipients.push(email);
+      await fs.writeFile(recipientsFile, recipients.join('\n'), 'utf-8');
+    }
+
     await resend.emails.send({
       from: process.env.EMAIL_FROM ?? 'noreply@blog.adharvarun.tech',
       to: email,
@@ -45,7 +59,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: 'Email failed to send' }, { status: 500 });
+    return NextResponse.json({ error: 'Subscription failed' }, { status: 500 });
   }
 }

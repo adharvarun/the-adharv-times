@@ -3,6 +3,7 @@ import { groq } from "next-sanity";
 import ReactMarkdown from "react-markdown";
 import blockContentToMarkdown from '@sanity/block-content-to-markdown';
 import Link from "next/link";
+import Image from "next/image";
 
 export const revalidate = 60;
 
@@ -55,6 +56,13 @@ const BlogPost = async ({ params }: PageProps): Promise<JSX.Element> => {
           )}
         </div>
         <article className="prose prose-lg max-w-none mx-auto text-gray-900">
+          {post.mainImage && post.mainImage.asset?.url && (
+            <Image
+              src={post.mainImage.asset.url}
+              alt={post.title}
+              className="w-full max-h-96 object-cover rounded-lg mb-8 mx-auto"
+            />
+          )}
           <ReactMarkdown>{markdownBody}</ReactMarkdown>
         </article>
       </div>
