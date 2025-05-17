@@ -18,6 +18,12 @@ const query = groq`*[_type == "post" && slug.current == $slug][0]{
       current
     }
   },
+  mainImage {
+    asset->{
+      url
+    },
+    alt
+  },
   body
 }`;
 
@@ -45,23 +51,40 @@ const BlogPost = async ({ params }: PageProps): Promise<JSX.Element> => {
         >
           ← Back to Home
         </Link>
-        <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center leading-tight">{post.title}</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center leading-tight">
+          {post.title}
+        </h1>
         {post.subtitle && (
-          <h2 className="text-xl text-gray-500 mb-4 text-center font-normal">{post.subtitle}</h2>
+          <h2 className="text-xl text-gray-500 mb-4 text-center font-normal">
+            {post.subtitle}
+          </h2>
         )}
         <div className="flex flex-col items-center gap-2 mb-10">
-          <span className="text-xs text-gray-400">{new Date(post.publishedAt).toLocaleDateString()}</span>
+          <span className="text-xs text-gray-400">
+            {new Date(post.publishedAt).toLocaleDateString()}
+          </span>
           {post.category?.title && (
-            <span className="text-xs text-gray-500 px-3 py-1 rounded-full bg-gray-100">{post.category.title}</span>
+            <span className="text-xs text-gray-500 px-3 py-1 rounded-full bg-gray-100">
+              {post.category.title}
+            </span>
           )}
         </div>
         <article className="prose prose-lg max-w-none mx-auto text-gray-900">
           {post.mainImage && post.mainImage.asset?.url && (
-            <Image
-              src={post.mainImage.asset.url}
-              alt={post.title}
-              className="w-full max-h-96 object-cover rounded-lg mb-8 mx-auto"
-            />
+            <div className="mb-8">
+              <Image
+                src={post.mainImage.asset.url}
+                alt={post.mainImage.alt || "Blog post image"}
+                width={1200}
+                height={600}
+                className="w-full max-h-96 object-cover rounded-lg mx-auto"
+              />
+              {post.mainImage.alt && (
+                <p className="text-sm text-gray-400 italic text-center mt-2">
+                  {post.mainImage.alt}
+                </p>
+              )}
+            </div>
           )}
           <ReactMarkdown>{markdownBody}</ReactMarkdown>
         </article>
