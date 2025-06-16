@@ -12,7 +12,7 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
     return (
       <div className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow w-full max-w-5xl mx-auto px-6 py-8">
+        <main className="flex-grow w-full max-w-5xl mx-auto px-6 py-8 pt-20">
           {children}
         </main>
         <Footer />

@@ -1,26 +1,49 @@
 'use client';
 
 import { useState } from "react";
+import { FaEnvelope } from "react-icons/fa";
 
 const NewsletterSignup = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("loading");
-
-    const res = await fetch('/api/subscribe', {
-      method: 'POST',
-      body: JSON.stringify({ email }),
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    if (res.ok) {
-      setStatus("success");
-      setEmail('');
-    } else {
+    
+    if (!validateEmail(email)) {
       setStatus("error");
+      setErrorMessage("Please enter a valid email address");
+      return;
+    }
+
+    setStatus("loading");
+    setErrorMessage('');
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatus("success");
+        setEmail('');
+      } else {
+        setStatus("error");
+        setErrorMessage(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage('Network error. Please try again.');
     }
   };
 
@@ -29,7 +52,7 @@ const NewsletterSignup = () => {
       onSubmit={handleSubmit}
       className="bg-white border border-gray-200 rounded-2xl shadow-md max-w-7xl mx-auto mt-3 mb-16 px-4 sm:px-8 py-8 sm:py-10 flex flex-col items-center"
     >
-      <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center">Subscribe to The Adharv Times</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mb-2 text-center flex gap-2 items-center"><FaEnvelope /> Subscribe to The Adharv Times</h2>
       <p className="text-gray-500 text-base mb-6 text-center">Get the latest posts and updates delivered straight to your inbox.</p>
       <div className="flex flex-col sm:flex-row w-full gap-3 sm:gap-2 mb-2">
         <input
@@ -49,7 +72,7 @@ const NewsletterSignup = () => {
         </button>
       </div>
       {status === "success" && <p className="text-green-600 mt-3 text-sm">You&apos;re subscribed! 🎉</p>}
-      {status === "error" && <p className="text-red-600 mt-3 text-sm">Something went wrong. 😕</p>}
+      {status === "error" && <p className="text-red-600 mt-3 text-sm">{errorMessage}</p>}
     </form>
   );
 };

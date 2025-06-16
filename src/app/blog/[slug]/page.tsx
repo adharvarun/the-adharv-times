@@ -4,6 +4,8 @@ import ReactMarkdown from "react-markdown";
 import blockContentToMarkdown from '@sanity/block-content-to-markdown';
 import Link from "next/link";
 import Image from "next/image";
+import { FaArrowLeft } from "react-icons/fa";
+import ShareModal from "./ShareModal";
 
 export const revalidate = 60;
 
@@ -45,12 +47,14 @@ const BlogPost = async ({ params }: PageProps): Promise<JSX.Element> => {
   return (
     <main className="bg-white min-h-screen w-full">
       <div className="max-w-7xl mx-auto py-16 px-4">
-        <Link
-          href="/"
-          className="inline-block text-gray-400 hover:text-gray-700 mb-8 text-sm font-medium"
-        >
-          ← Back to Home
-        </Link>
+        <div className="flex items-center gap-4 mb-8">
+          <Link
+            href="/"
+            className="inline-block text-gray-400 hover:text-gray-700 text-sm font-medium"
+          >
+            <p className="flex items-center gap-2"><FaArrowLeft /> Back to Home</p>
+          </Link>
+        </div>
         <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center leading-tight">
           {post.title}
         </h1>
@@ -86,6 +90,7 @@ const BlogPost = async ({ params }: PageProps): Promise<JSX.Element> => {
               )}
             </div>
           )}
+          <ShareModal />
           <ReactMarkdown>{markdownBody}</ReactMarkdown>
         </article>
       </div>

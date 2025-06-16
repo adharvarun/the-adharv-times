@@ -1,30 +1,74 @@
-import { promises as fs } from 'fs';
-import path from 'path';
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
+import { client } from '@/sanity/lib/client';
+
+// Initialize rate limiter
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(3, '1 h'), // 3 requests per hour
+  analytics: true,
+});
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const recipientsFile = path.join(process.cwd(), 'recipients.txt');
 
+// Email validation regex
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Rate limit by IP
 export async function POST(req: Request) {
-  const { email } = await req.json();
-
-  if (!email || !email.includes('@')) {
-    return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
-  }
-
   try {
-    let recipients: string[] = [];
-    try {
-      const data = await fs.readFile(recipientsFile, 'utf-8');
-      recipients = data.split('\n').map(e => e.trim()).filter(Boolean);
-    } catch {}
+    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    const { success } = await ratelimit.limit(ip);
 
-    if (!recipients.includes(email)) {
-      recipients.push(email);
-      await fs.writeFile(recipientsFile, recipients.join('\n'), 'utf-8');
+    if (!success) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
     }
 
+    const { email } = await req.json();
+
+    // Validate email
+    if (!email || typeof email !== 'string' || !EMAIL_REGEX.test(email)) {
+      return NextResponse.json(
+        { error: 'Please provide a valid email address' },
+        { status: 400 }
+      );
+    }
+
+    // Check if email is already subscribed
+    const existingSubscriber = await client.fetch(
+      `*[_type == "subscriber" && email == $email][0]`,
+      { email }
+    );
+
+    if (existingSubscriber) {
+      if (existingSubscriber.status === 'active') {
+        return NextResponse.json(
+          { error: 'This email is already subscribed' },
+          { status: 400 }
+        );
+      } else {
+        // Reactivate unsubscribed user
+        await client
+          .patch(existingSubscriber._id)
+          .set({ status: 'active', subscribedAt: new Date().toISOString() })
+          .commit();
+      }
+    } else {
+      // Add new subscriber
+      await client.create({
+        _type: 'subscriber',
+        email,
+        subscribedAt: new Date().toISOString(),
+        status: 'active',
+      });
+    }
+
+    // Send welcome email
     await resend.emails.send({
       from: process.env.EMAIL_FROM ?? 'noreply@blog.adharvarun.tech',
       to: email,
@@ -60,6 +104,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error('Error:', err);
-    return NextResponse.json({ error: 'Subscription failed' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Something went wrong. Please try again later.' },
+      { status: 500 }
+    );
   }
 }
