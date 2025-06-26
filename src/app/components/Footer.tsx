@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter, FaRss } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import Link from "next/link";
 
 export default function Footer() {
@@ -59,24 +59,27 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://adharvarun.tech/#resume" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition">
+                <a href="https://adharvarun.tech/resume" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition">
                   Resume
                 </a>
               </li>
               <li>
-                <a href="https://adharvarun.tech/#contact" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition">
+                <a href="https://adharvarun.tech/contact" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition">
                   Contact
                 </a>
               </li>
             </ul>
           </div>
         </div>
-
         <div className="border-t border-gray-200 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-500">
-            Made with ❤️ by Adharv Arun &middot; {currentYear}
+              © {currentYear} The Adharv Times. All rights reserved.
             </p>
+            <div className="flex gap-6 text-sm text-gray-500">
+              <a href="/privacy" className="hover:text-gray-900 transition">Privacy Policy</a>
+              <a href="/terms" className="hover:text-gray-900 transition">Terms of Service</a>
+            </div>
           </div>
         </div>
       </div>
