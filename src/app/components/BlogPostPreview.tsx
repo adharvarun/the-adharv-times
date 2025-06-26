@@ -22,7 +22,10 @@ interface BlogPostPreviewProps {
 
 export default function BlogPostPreview({ post }: BlogPostPreviewProps) {
   return (
-    <li key={post._id} className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition p-0 overflow-hidden">
+    <li
+      key={post._id}
+      className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition p-0 overflow-hidden"
+    >
       <Link href={`/blog/${post.slug.current}`} className="block">
         {post.mainImage && (
           <Image

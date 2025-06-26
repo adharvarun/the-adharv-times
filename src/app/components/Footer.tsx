@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="w-full bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="text-2xl font-bold text-gray-900 mb-4">The Adharv Times</div>
             <p className="text-gray-600 mb-4 max-w-md">
@@ -34,11 +34,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-gray-600 hover:text-gray-900 transition">
-                  Blog
-                </Link>
-              </li>
-              <li>
                 <a href="https://adharvarun.tech" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition">
                   Portfolio
                 </a>
@@ -50,36 +45,12 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-4">Resources</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="https://adharvarun.tech/projects" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition">
-                  Projects
-                </a>
-              </li>
-              <li>
-                <a href="https://adharvarun.tech/resume" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition">
-                  Resume
-                </a>
-              </li>
-              <li>
-                <a href="https://adharvarun.tech/contact" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
         <div className="border-t border-gray-200 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-500">
               © {currentYear} The Adharv Times. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm text-gray-500">
-              <a href="/privacy" className="hover:text-gray-900 transition">Privacy Policy</a>
-              <a href="/terms" className="hover:text-gray-900 transition">Terms of Service</a>
-            </div>
           </div>
         </div>
       </div>
