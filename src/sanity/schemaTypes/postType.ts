@@ -27,11 +27,6 @@ export const postType = defineType({
       to: [{ type: 'author' }],
     }),
     defineField({
-      name: 'category',
-      type: 'reference',
-      to: [{ type: 'category' }],
-    }),
-    defineField({
       name: 'tags',
       type: 'array',
       of: [{ type: 'string' }],
@@ -42,11 +37,6 @@ export const postType = defineType({
     defineField({
       name: 'publishedAt',
       type: 'datetime',
-    }),
-    defineField({
-      name: 'mainImage',
-      type: 'image',
-      options: { hotspot: true },
     }),
     defineField({
       name: 'body',
