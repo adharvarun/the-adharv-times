@@ -1,8 +1,5 @@
 import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
-import Header from "./components/Header";
-import AnimatedBlogPostList from "./components/AnimatedBlogPostList";
-import NewsletterSignup from "./components/NewsletterSignup";
 import HomePageClient from "./components/HomePageClient";
 
 type Post = {
@@ -21,6 +18,7 @@ const query = groq`*[_type == "post"] | order(publishedAt desc)[0...10] {
   subtitle,
   slug,
   publishedAt,
+  tags,
   author {
     name
   },

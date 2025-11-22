@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
+import { ThemeProvider } from "./ThemeProvider";
 
 export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -10,13 +11,15 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
 
   if (!isStudio) {
     return (
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow w-full max-w-5xl mx-auto px-6 py-8 pt-20">
-          {children}
-        </main>
-        <Footer />
-      </div>
+      <ThemeProvider>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-grow w-full max-w-5xl mx-auto px-6 py-8">
+            {children}
+          </main>
+          <Footer />
+        </div>
+      </ThemeProvider>
     );
   }
 

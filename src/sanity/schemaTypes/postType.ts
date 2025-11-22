@@ -32,6 +32,14 @@ export const postType = defineType({
       to: [{ type: 'category' }],
     }),
     defineField({
+      name: 'tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'tags',
+      },
+    }),
+    defineField({
       name: 'publishedAt',
       type: 'datetime',
     }),

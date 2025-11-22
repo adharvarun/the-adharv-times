@@ -13,11 +13,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, ignored: true });
   }
 
-  await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/notify-subscribers`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ post: body }),
-  });
-
+  // Webhook received - can be extended for other purposes
   return NextResponse.json({ ok: true });
 } 
