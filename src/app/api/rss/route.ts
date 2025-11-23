@@ -19,10 +19,15 @@ export async function GET(request: Request) {
   const posts = await client.fetch(query);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://blog.adharvarun.tech';
   const portfolioUrl = 'https://adharvarun.tech';
-  const faviconUrl = 'https://raw.githubusercontent.com/adharvarun/adharvarun/refs/heads/main/favicon.ico';
+  const rssIconUrl = `${baseUrl}/rss_icon.ico`;
 
   const origin = request.headers.get('origin');
-  const allowedOrigins = [portfolioUrl, 'https://adharvarun.tech', 'http://localhost:3000'];
+  const allowedOrigins = [
+    portfolioUrl, 
+    'https://adharvarun.tech', 
+    'https://www.adharvarun.tech',
+    'http://localhost:3000'
+  ];
   const corsOrigin = origin && allowedOrigins.includes(origin) ? origin : null;
 
   const rss = `<?xml version="1.0" encoding="UTF-8" ?>
@@ -33,7 +38,7 @@ export async function GET(request: Request) {
     <description>A space where tech, creativity, and curiosity collide.</description>
     <language>en-us</language>
     <image>
-      <url>${faviconUrl}</url>
+      <url>${rssIconUrl}</url>
       <title>The Adharv Times</title>
       <link>${baseUrl}</link>
     </image>
@@ -71,9 +76,14 @@ export async function GET(request: Request) {
 }
 
 export async function OPTIONS(request: Request) {
-  const portfolioUrl = process.env.PORTFOLIO_URL || 'https://adharvarun.tech';
+  const portfolioUrl = 'https://adharvarun.tech';
   const origin = request.headers.get('origin');
-  const allowedOrigins = [portfolioUrl, 'https://adharvarun.tech', 'http://localhost:3000'];
+  const allowedOrigins = [
+    portfolioUrl, 
+    'https://adharvarun.tech', 
+    'https://www.adharvarun.tech',
+    'http://localhost:3000'
+  ];
   const corsOrigin = origin && allowedOrigins.includes(origin) ? origin : null;
 
   const headers: HeadersInit = {
