@@ -15,9 +15,15 @@ const query = groq`*[_type == "post"] | order(publishedAt desc) {
   }
 }`;
 
-export async function GET() {
+export async function GET(request: Request) {
   const posts = await client.fetch(query);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://blog.adharvarun.tech';
+  const portfolioUrl = 'https://adharvarun.tech';
+  const faviconUrl = 'https://raw.githubusercontent.com/adharvarun/adharvarun/refs/heads/main/favicon.ico';
+
+  const origin = request.headers.get('origin');
+  const allowedOrigins = [portfolioUrl, 'https://adharvarun.tech', 'http://localhost:3000'];
+  const corsOrigin = origin && allowedOrigins.includes(origin) ? origin : null;
 
   const rss = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -26,6 +32,11 @@ export async function GET() {
     <link>${baseUrl}</link>
     <description>A space where tech, creativity, and curiosity collide.</description>
     <language>en-us</language>
+    <image>
+      <url>${faviconUrl}</url>
+      <title>The Adharv Times</title>
+      <link>${baseUrl}</link>
+    </image>
     <atom:link href="${baseUrl}/api/rss" rel="self" type="application/rss+xml" />
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     ${posts.map((post: any) => {
@@ -46,9 +57,33 @@ export async function GET() {
   </channel>
 </rss>`;
 
-  return new NextResponse(rss, {
-    headers: {
-      'Content-Type': 'application/xml',
-    },
-  });
+  const headers: HeadersInit = {
+    'Content-Type': 'application/xml',
+  };
+
+  if (corsOrigin) {
+    headers['Access-Control-Allow-Origin'] = corsOrigin;
+    headers['Access-Control-Allow-Methods'] = 'GET, OPTIONS';
+    headers['Access-Control-Allow-Headers'] = 'Content-Type';
+  }
+
+  return new NextResponse(rss, { headers });
+}
+
+export async function OPTIONS(request: Request) {
+  const portfolioUrl = process.env.PORTFOLIO_URL || 'https://adharvarun.tech';
+  const origin = request.headers.get('origin');
+  const allowedOrigins = [portfolioUrl, 'https://adharvarun.tech', 'http://localhost:3000'];
+  const corsOrigin = origin && allowedOrigins.includes(origin) ? origin : null;
+
+  const headers: HeadersInit = {
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
+  if (corsOrigin) {
+    headers['Access-Control-Allow-Origin'] = corsOrigin;
+  }
+
+  return new NextResponse(null, { headers });
 }
